@@ -1,26 +1,28 @@
 class Solution {
     public int solution(int[] schedules, int[][] timelogs, int startday) {
         int answer = 0;
-        int total_mans = schedules.length;
-        int total_days = timelogs[0].length;
+        int days = timelogs[0].length;
         
-        for (int man=0; man<total_mans; man++) {
-            int cnt = 0;
-            int schedule = schedules[man] + 10;
-            if (schedule % 100 >= 60) {
-                schedule = schedule + 40;
-            }
-            System.out.println(schedule);
+        for (int man=0; man<schedules.length; man++) {
+            int limit = addTen(schedules[man]);
+            boolean ok = true;
             
-            for (int day=0; day<total_days; day++) {             
-                if ((timelogs[man][day] <= schedule) || weekend(day+startday)){
-                    cnt++;
+            for (int d=0; d<days; d++) {             
+                if (!weekend(startday+d) && timelogs[man][d] > limit) {
+                    ok = false;
+                    break;
                 }
             }
-            if (cnt == total_days) answer++;
+            
+            if (ok) answer++;
         }
         
         return answer;
+    }
+    private int addTen(int time){
+        time += 10;
+        if (time % 100 >= 60) time += 40;
+        return time;
     }
     
     private boolean weekend(int day) {
