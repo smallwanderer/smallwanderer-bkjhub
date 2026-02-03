@@ -10,9 +10,9 @@ def solution(n, t, m, timetable):
     answer = 0
     idx = 0
     # i번째 차
-    for i in range(n):
+    for _ in range(n):
         # i번째 차 m명 계산
-        for j in range(m):
+        for _ in range(m):
             if idx >= N:
                 return min_to_time(bus)
             
